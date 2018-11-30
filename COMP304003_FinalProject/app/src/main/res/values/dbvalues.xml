@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="db_name">Recruitment.db</string>
+    <string name="db_version">1</string>
+
+    <string name="tbl_employee">tbl_employee</string>
+    <string name="tbl_users">tbl_users</string>
+    <string name="tbl_availability">tbl_availability</string>
+    <string name="tbl_schedule">tbl_schedule</string>
+
+    <string-array name="tables">
+        <item>@string/tbl_users</item>
+        <item>@string/tbl_employee</item>
+        <item>@string/tbl_availability</item>
+        <item>@string/tbl_schedule</item>
+    </string-array>
+
+    <string-array name="table_create_scripts">
+        <item>
+            CREATE TABLE tbl_users (_id INTEGER PRIMARY KEY AUTOINCREMENT ,userId TEXT, password TEXT, firstName TEXT, lastName TEXT, address TEXT, city TEXT, postalCode TEXT, qualification TEXT, experience INTEGER);
+        </item>
+
+    </string-array>
+</resources>

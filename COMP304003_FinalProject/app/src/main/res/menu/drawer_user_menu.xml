@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="Schedule">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item android:id="@+id/navMySchedule" android:title="My Schedule" android:icon="@drawable/schedule" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Profile">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item android:id="@+id/navMyProfile" android:title="Personal Info" android:icon="@drawable/ic_profile" />
+                <item android:id="@+id/navMyAvailability" android:title="My Availability" android:icon="@drawable/availability" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:id="@+id/navLogout" android:title="Log Out"/>
+
+</menu>
