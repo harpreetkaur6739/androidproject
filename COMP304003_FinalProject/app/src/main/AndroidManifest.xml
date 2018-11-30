@@ -16,7 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserHome"></activity>
+        <activity android:name=".UserHome" />
+        <activity android:name=".AdminHome" />
+        <activity android:name=".AddUser"></activity>
     </application>
 
 </manifest>
