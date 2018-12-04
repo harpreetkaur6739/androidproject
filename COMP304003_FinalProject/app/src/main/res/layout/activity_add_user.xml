@@ -7,33 +7,56 @@
     tools:context=".AddUser"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="225dp">
+
+        <ImageView
+            android:id="@+id/image_photo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/person"
+            android:background="#00A8EC"/>
+
+        <Button
+            android:id="@+id/image_button"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+        android:background="@drawable/background_photo"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"/>
+
+
+    </RelativeLayout>
+
     <EditText android:hint="Name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/employee_name" />
 
     <EditText android:hint="Address"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/employee_address" />
 
     <EditText android:hint="Phone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/employee_phone" />
 
-    <EditText android:hint="Email"
+    <EditText android:hint="WebSite"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/employee_site" />
 
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numStars="5"
         android:max="10"
-        android:layout_gravity="center" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Salve"/>
+        android:layout_gravity="center"
+        android:id="@+id/employee_score" />
 
 
 </LinearLayout>

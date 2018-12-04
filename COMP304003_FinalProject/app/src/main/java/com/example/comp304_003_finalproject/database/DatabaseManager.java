@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.example.comp304_003_finalproject.R;
 
+
+
 public class DatabaseManager extends SQLiteOpenHelper {
     //
     private static String DATABASE_NAME;
