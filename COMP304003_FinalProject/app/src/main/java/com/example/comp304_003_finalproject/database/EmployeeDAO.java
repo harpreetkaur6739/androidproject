@@ -18,21 +18,27 @@ public class EmployeeDAO extends SQLiteOpenHelper {
 
 
     public EmployeeDAO(Context context) {
-        super(context, "EmployeeData", null, 1);
+        super(context, "EmployeeData", null, 2);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE Employee (id INTEGER PRIMARY KEY, name TEXT NOT NULL, address TEXT, phone TEXT, site TEXT, score REAL);";
+        String sql = "CREATE TABLE Employee (id INTEGER PRIMARY KEY, name TEXT NOT NULL, address TEXT, phone TEXT, site TEXT, score REAL , photo TEXT);";
         db.execSQL(sql);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        String sql = "DROP TABLE IF EXISTS Employee";
-        db.execSQL(sql);
-        onCreate(db);
+        String sql = "";
+        switch (oldVersion) {
+            case 1:
+                sql = "ALTER TABLE Employee ADD COLUMN photo TEXT";
+                db.execSQL(sql);
+
+
+        }
+
 
     }
 
@@ -54,6 +60,7 @@ public class EmployeeDAO extends SQLiteOpenHelper {
         dados.put("phone", employee.getPhone());
         dados.put("site", employee.getSite());
         dados.put("score", employee.getScore());
+        dados.put("photo", employee.getPhoto());
         return dados;
     }
 
@@ -73,6 +80,8 @@ public class EmployeeDAO extends SQLiteOpenHelper {
             employee.setPhone(c.getString(c.getColumnIndex("phone")));
             employee.setSite(c.getString(c.getColumnIndex("site")));
             employee.setScore(c.getDouble(c.getColumnIndex("score")));
+            employee.setPhoto(c.getString(c.getColumnIndex("photo")));
+
 
             employees.add(employee);
 

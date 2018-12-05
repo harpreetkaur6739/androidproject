@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.comp304_003_finalproject.adapter.EmployeeAdapter;
 import com.example.comp304_003_finalproject.database.EmployeeDAO;
 import com.example.comp304_003_finalproject.model.Employee;
 
@@ -79,7 +80,7 @@ public class AdminHome extends AppCompatActivity {
         dao.close();
 
 
-        ArrayAdapter<Employee> adapter = new ArrayAdapter<Employee>(this, android.R.layout.simple_list_item_1, employees);
+        EmployeeAdapter adapter = new EmployeeAdapter(this, employees);
         listEmployee.setAdapter(adapter);
     }
 
