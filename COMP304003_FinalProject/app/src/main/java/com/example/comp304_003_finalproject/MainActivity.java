@@ -6,14 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.comp304_003_finalproject.database.DatabaseHandler;
+
 public class MainActivity extends AppCompatActivity {
 
     Button bntAdmin;
-
+    DatabaseHandler dbHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        dbHandler = new DatabaseHandler(this);
 
         bntAdmin = (Button) findViewById(R.id.btnAdminLogin);
 
@@ -32,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void loginAsUser(View v){
-
+        Intent intent = new Intent(MainActivity.this, UserLogin.class);
+        intent.putExtra("user","user");
+        startActivity(intent);
     }
 }

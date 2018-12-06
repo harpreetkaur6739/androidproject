@@ -23,14 +23,17 @@ public class DatabaseHandler {
     //
     private static String tableCreatorString[];
 
+    private static String tableInsertString[];
+
     private DatabaseHandler(){}
 
     public DatabaseHandler(Context context){
         tables = context.getResources().getStringArray(R.array.tables);
         tableCreatorString = context.getResources().getStringArray(R.array.table_create_scripts);
+        tableInsertString = context.getResources().getStringArray(R.array.table_insert_scripts);
 
         dbManager = new DatabaseManager(context);
-        dbManager.dbInitialize(tables,tableCreatorString);
+        dbManager.dbInitialize(tables,tableCreatorString, tableInsertString);
     }
 
     public static DatabaseHandler getDbHandlerInstance(){

@@ -16,4 +16,10 @@
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
+    <style name="title_style">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/label_text</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
 </resources>

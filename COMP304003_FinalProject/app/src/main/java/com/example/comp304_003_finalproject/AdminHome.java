@@ -3,6 +3,7 @@ package com.example.comp304_003_finalproject;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.provider.Browser;
 import android.support.v4.app.ActivityCompat;
@@ -184,6 +185,7 @@ public class AdminHome extends AppCompatActivity {
                 dao.close();
 
                 loadList();
+                PdfDocument doc = new PdfDocument();
 
                 return false;
 

@@ -14,6 +14,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     //
     private String tables[]; //table names
     private String tableCreatorString[]; //SQL statements to create tables
+    private String tableInsertString[];
     //class constructor
     public DatabaseManager(Context context) {
 
@@ -29,8 +30,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
         for (int i=0;i<tables.length;i++)
             db.execSQL("DROP TABLE IF EXISTS " + tables[i]);
         //create them
-        for (int i=0;i<tables.length;i++)
+        for (int i=0;i<tableCreatorString.length;i++)
             db.execSQL(tableCreatorString[i]);
+
+        //insert
+        for(int i=0; i<tableInsertString.length;i++){
+            db.execSQL(tableInsertString[i]);
+        }
 
     }
 
@@ -55,10 +61,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     //initialize database table names and DDL statements
-    public void dbInitialize(String[] tables, String tableCreatorString[])
+    public void dbInitialize(String[] tables, String tableCreatorString[], String tableInsertString[])
     {
         this.tables=tables;
         this.tableCreatorString=tableCreatorString;
+        this.tableInsertString = tableInsertString;
     }
 
     public SQLiteDatabase getWritableDbHandler(){
