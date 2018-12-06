@@ -19,41 +19,37 @@
             android:src="@drawable/person"
             android:background="#00A8EC"/>
 
-        <Button
-            android:id="@+id/image_button"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-        android:background="@drawable/background_photo"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"/>
-
-
     </RelativeLayout>
 
-    <EditText android:hint="User Id"
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/user_id" />
+        android:id="@+id/user_id"
+        android:enabled="false"/>
 
     <EditText android:hint="Name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/employee_name" />
+        android:id="@+id/employee_name"
+        android:enabled="false"/>
 
     <EditText android:hint="Address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/employee_address" />
+        android:id="@+id/employee_address"
+        android:enabled="false" />
 
     <EditText android:hint="Phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/employee_phone" />
+        android:id="@+id/employee_phone"
+        android:enabled="false"/>
 
     <EditText android:hint="WebSite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/employee_site" />
+        android:id="@+id/employee_site"
+        android:enabled="false"/>
 
     <RatingBar
         android:layout_width="wrap_content"
@@ -61,7 +57,8 @@
         android:numStars="5"
         android:max="10"
         android:layout_gravity="center"
-        android:id="@+id/employee_score" />
+        android:id="@+id/employee_score"
+        android:isIndicator="true"/>
 
 
 </LinearLayout>

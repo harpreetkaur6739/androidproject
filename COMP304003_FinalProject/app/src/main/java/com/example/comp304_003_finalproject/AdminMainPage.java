@@ -6,7 +6,6 @@
 package com.example.comp304_003_finalproject;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,13 +17,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class UserHome extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class AdminMainPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_home);
+        setContentView(R.layout.activity_admin_main_page);
 
         drawer = findViewById(R.id.drawer_layout);
 
@@ -38,30 +37,23 @@ public class UserHome extends AppCompatActivity implements NavigationView.OnNavi
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-
-        SharedPreferences myPref = getSharedPreferences("RecruitmentSharedPreferences", MODE_PRIVATE);
-
-        ((TextView)navView.getHeaderView(0).findViewById(R.id.txtUserHeader)).setText( "Hello, " + myPref.getString("UserName",""));
+        ((TextView)navView.getHeaderView(0).findViewById(R.id.txtUserHeader)).setText( "Hello, Admin");
 
         if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ViewUser()).commit();
-            navView.setCheckedItem(R.id.navMyProfile);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminHome()).commit();
+            navView.setCheckedItem(R.id.navViewEmployees);
         }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch(menuItem.getItemId()){
-            case R.id.navMyProfile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ViewUser ()).commit();
-                break;
-
-           case R.id.navMySchedule:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ViewMySchedule ()).commit();
+            case R.id.navViewEmployees:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminHome ()).commit();
                 break;
 
             case R.id.navLogout:
-                Intent intent = new Intent(UserHome.this, MainActivity.class);
+                Intent intent = new Intent(AdminMainPage.this, MainActivity.class);
                 startActivity(intent);
                 break;
         }

@@ -2,19 +2,20 @@ package com.example.comp304_003_finalproject;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.comp304_003_finalproject.database.EmployeeDAO;
@@ -22,34 +23,26 @@ import com.example.comp304_003_finalproject.model.Employee;
 
 import java.io.File;
 
-public class AddUser extends AppCompatActivity {
+public class AddUser extends Fragment {
 
 
     public static final int CODIGO_CAMERA = 567;
     private UserHelper helper;
     private String caminhoFoto;
+    View viewAddUser;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_user);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        viewAddUser = inflater.inflate(R.layout.activity_add_user, container, false);
+        helper = new UserHelper (viewAddUser);
 
-        helper = new UserHelper (this);
-
-        Intent intent = getIntent();
-
-        Employee employee = (Employee)  intent.getSerializableExtra("employee");
-
-        if (employee !=null) {
-            helper.fieldTheEmployee(employee);
-        }
-
-        Button botaoFoto = (Button) findViewById(R.id.image_button);
+        Button botaoFoto = (Button) viewAddUser.findViewById(R.id.image_button);
         botaoFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                caminhoFoto = getExternalFilesDir(null) + "/"+ System.currentTimeMillis() +".jpg";
+                caminhoFoto = getActivity().getExternalFilesDir(null) + "/"+ System.currentTimeMillis() +".jpg";
                 File arquivoFoto = new File(caminhoFoto);
                 intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(arquivoFoto));
                 startActivityForResult(intentCamera, CODIGO_CAMERA);
@@ -58,9 +51,11 @@ public class AddUser extends AppCompatActivity {
         });
 
 
+        setHasOptionsMenu(true);
+        return viewAddUser;
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == CODIGO_CAMERA) {
                 helper.loadImage(caminhoFoto);
@@ -70,12 +65,11 @@ public class AddUser extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_adduser, menu);
+         inflater.inflate(R.menu.menu_adduser, menu);
 
-        return super.onCreateOptionsMenu(menu);
+        super.onCreateOptionsMenu(menu, inflater);
 
 
     }
@@ -86,7 +80,7 @@ public class AddUser extends AppCompatActivity {
             case R.id.menu_addUser:
 
                 Employee employee = helper.getEmployee();
-                EmployeeDAO dao = new EmployeeDAO(this);
+                EmployeeDAO dao = new EmployeeDAO();
 
                 if (employee.getId() != null)  {
                     dao.upadate(employee);
@@ -94,15 +88,11 @@ public class AddUser extends AppCompatActivity {
                     dao.insert(employee);
                 }
 
-
-                dao.close();
-
-                Toast.makeText(AddUser.this, "Salve:" + employee.getName(), Toast.LENGTH_SHORT).show();
-
-                finish();
+                Toast.makeText(getContext(), "User Added:" + employee.getName(), Toast.LENGTH_SHORT).show();
                 break;
 
         }
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminHome()).commit();
         return super.onOptionsItemSelected(item);
 
     }

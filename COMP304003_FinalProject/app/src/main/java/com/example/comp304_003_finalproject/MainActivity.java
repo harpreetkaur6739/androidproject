@@ -1,3 +1,8 @@
+/**
+ * Author
+ * Harpreet Kaur
+ * 300910377
+ */
 package com.example.comp304_003_finalproject;
 
 import android.Manifest;
@@ -42,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v)
             {
 
-                Intent intent=new Intent(MainActivity.this, AdminHome.class);
+                Intent intent=new Intent(MainActivity.this, AdminMainPage.class);
 
                 startActivity(intent);
 

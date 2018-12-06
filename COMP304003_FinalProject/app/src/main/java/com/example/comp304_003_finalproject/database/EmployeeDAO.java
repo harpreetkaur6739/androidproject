@@ -14,47 +14,26 @@ import com.example.comp304_003_finalproject.model.Employee;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeDAO extends SQLiteOpenHelper {
+public class EmployeeDAO {
 
+    DatabaseHandler dbHandler;
+    String TABLE_EMPLOYEE = "Employee";
 
-    public EmployeeDAO(Context context) {
-        super(context, "EmployeeData", null, 2);
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE Employee (id INTEGER PRIMARY KEY, name TEXT NOT NULL, address TEXT, phone TEXT, site TEXT, score REAL , photo TEXT);";
-        db.execSQL(sql);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        String sql = "";
-        switch (oldVersion) {
-            case 1:
-                sql = "ALTER TABLE Employee ADD COLUMN photo TEXT";
-                db.execSQL(sql);
-
-
-        }
-
-
+    public EmployeeDAO(){
+        dbHandler = DatabaseHandler.getDbHandlerInstance();
     }
 
     public void insert(Employee employee) {
 
-        SQLiteDatabase db = getWritableDatabase();
+         ContentValues dados = getContentValuesEmployee(employee);
 
-        ContentValues dados = getContentValuesEmployee(employee);
-
-        db.insert("Employee", null, dados );
-
+         Long rowId = dbHandler.addRecord(dados, TABLE_EMPLOYEE);
     }
 
     @NonNull
     private ContentValues getContentValuesEmployee(Employee employee) {
         ContentValues dados = new ContentValues();
+        dados.put("userId", employee.getUserId());
         dados.put("name", employee.getName());
         dados.put("address", employee.getAddress());
         dados.put("phone", employee.getPhone());
@@ -66,15 +45,13 @@ public class EmployeeDAO extends SQLiteOpenHelper {
 
     public List<Employee> findEmployees(){
 
-
-        String sql = "SELECT * FROM Employee;";
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery(sql, null);
+        Cursor c = dbHandler.getTableCursor(TABLE_EMPLOYEE, null, null);
 
         List<Employee> employees = new ArrayList<Employee>();
         while (c.moveToNext()) {
             Employee employee = new Employee();
             employee.setId(c.getLong(c.getColumnIndex("id")));
+            employee.setUserId(c.getString(c.getColumnIndex("userId")));
             employee.setName(c.getString(c.getColumnIndex("name")));
             employee.setAddress(c.getString(c.getColumnIndex("address")));
             employee.setPhone(c.getString(c.getColumnIndex("phone")));
@@ -92,6 +69,30 @@ public class EmployeeDAO extends SQLiteOpenHelper {
        // return null;
     }
 
+    public Employee findEmployeeById(String[] userId){
+        String[] key = new String[]{"userId"};
+
+        Cursor c = dbHandler.getTableCursor(TABLE_EMPLOYEE, key, userId);
+
+        Employee employee = null;
+        while (c.moveToNext()) {
+            employee = new Employee();
+            employee.setId(c.getLong(c.getColumnIndex("id")));
+            employee.setUserId(c.getString(c.getColumnIndex("userId")));
+            employee.setName(c.getString(c.getColumnIndex("name")));
+            employee.setAddress(c.getString(c.getColumnIndex("address")));
+            employee.setPhone(c.getString(c.getColumnIndex("phone")));
+            employee.setSite(c.getString(c.getColumnIndex("site")));
+            employee.setScore(c.getDouble(c.getColumnIndex("score")));
+            employee.setPhoto(c.getString(c.getColumnIndex("photo")));
+
+        }
+        c.close();
+
+        return employee;
+        // return null;
+    }
+
     public List<Employee> listEmployess() {
 
        // String sql = "SELECT * FROM Employee;";
@@ -103,22 +104,21 @@ public class EmployeeDAO extends SQLiteOpenHelper {
     }
 
     public void deleta(Employee employee) {
-
-        SQLiteDatabase db = getWritableDatabase();
-
-        String [] params = {String.valueOf(employee.getId())};
-        db.delete("Employee", "id = ?", params);
+        String key = "id";
+        String params = employee.getId().toString();
+        dbHandler.deleteRecord(TABLE_EMPLOYEE, key, params);
     }
 
     public void upadate(Employee employee) {
 
-        SQLiteDatabase db = getWritableDatabase();
-
         ContentValues dados =  getContentValuesEmployee(employee);
-
+        String[] key = new String []{"id"};
         String[] params ={employee.getId().toString()};
-        db.update("Employee", dados, "id = ?", params);
+        dbHandler.updateRecord(dados, TABLE_EMPLOYEE, key, params);
+        //db.update("Employee", dados, "id = ?", params);
 
 
     }
+
+
 }

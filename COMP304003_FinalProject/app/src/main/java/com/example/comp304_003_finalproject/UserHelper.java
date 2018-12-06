@@ -2,6 +2,7 @@ package com.example.comp304_003_finalproject;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -10,6 +11,7 @@ import com.example.comp304_003_finalproject.model.Employee;
 
 public class UserHelper {
 
+    private final EditText userId;
     private final EditText empName;
     private final EditText empAddress;
     private final EditText empPhone;
@@ -17,22 +19,23 @@ public class UserHelper {
     private final RatingBar empScore;
     private final ImageView empPhoto;
 
-
     private Employee employee;
 
-    public UserHelper(AddUser activity)  {
-         empName = (EditText) activity.findViewById(R.id.employee_name);
-         empAddress = (EditText) activity.findViewById(R.id.employee_address);
-         empPhone = (EditText) activity.findViewById(R.id.employee_phone);
-         empSite = (EditText) activity.findViewById(R.id.employee_site);
-         empScore = (RatingBar) activity.findViewById(R.id.employee_score);
-         empPhoto = (ImageView) activity.findViewById(R.id.image_photo);
+    public UserHelper(View viewUser)  {
+        userId = (EditText) viewUser.findViewById(R.id.user_id);
+        empName = (EditText) viewUser.findViewById(R.id.employee_name);
+        empAddress = (EditText) viewUser.findViewById(R.id.employee_address);
+        empPhone = (EditText) viewUser.findViewById(R.id.employee_phone);
+        empSite = (EditText) viewUser.findViewById(R.id.employee_site);
+        empScore = (RatingBar) viewUser.findViewById(R.id.employee_score);
+        empPhoto = (ImageView) viewUser.findViewById(R.id.image_photo);
         employee = new Employee();
     }
 
     public Employee getEmployee() {
 
         Employee employee = new Employee();
+        employee.setUserId(userId.getText().toString());
         employee.setName(empName.getText().toString());
         employee.setAddress(empAddress.getText().toString());
         employee.setPhone(empPhone.getText().toString());
@@ -44,6 +47,7 @@ public class UserHelper {
     }
 
     public void fieldTheEmployee(Employee employee) {
+        userId.setText(employee.getUserId());
         empName.setText(employee.getName());
         empAddress.setText(employee.getAddress());
         empPhone.setText(employee.getPhone());

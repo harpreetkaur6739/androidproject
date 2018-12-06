@@ -37,7 +37,7 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
             googleMap.moveCamera(update);
         }
 
-        EmployeeDAO employeeDAO =  new EmployeeDAO(getContext());
+        EmployeeDAO employeeDAO =  new EmployeeDAO();
         for(Employee employee : employeeDAO.findEmployees()){
             LatLng coordenada = pegaCoordenadaDoEndereco(employee.getAddress());
             if (coordenada != null) {
@@ -50,7 +50,7 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
 
             }
         }
-        employeeDAO.close();
+        //employeeDAO.close();
 
 
     }

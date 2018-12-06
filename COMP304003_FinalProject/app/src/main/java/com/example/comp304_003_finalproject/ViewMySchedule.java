@@ -1,3 +1,8 @@
+/**
+ * Author
+ * Harpreet Kaur
+ * 300910377
+ */
 package com.example.comp304_003_finalproject;
 
 import android.Manifest;
@@ -5,12 +10,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,10 +26,16 @@ import android.widget.Toast;
 
 import com.example.comp304_003_finalproject.adapter.CustomScheduleAdapter;
 import com.example.comp304_003_finalproject.database.DatabaseHandler;
+import com.example.comp304_003_finalproject.database.ScheduleDAO;
+import com.example.comp304_003_finalproject.model.Schedule;
 import com.example.comp304_003_finalproject.services.DownloadService;
+import com.example.comp304_003_finalproject.services.MessageSender;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -39,14 +48,10 @@ public class ViewMySchedule extends Fragment {
     Resources resources;
     View viewScheduleLayout;
     ListView lstLayout;
-    CustomScheduleAdapter cursorAdapter = null;
-    String[] fromCols = {"date","site","startTime", "endTime"};
-    int[] toCols = {R.id.itemSchedDate, R.id.itemSite, R.id.itemStartTime, R.id.itemEndTime};
-    final String COL_USERNAME = "_userId";
     String userId;
     Button btnDownload;
     ArrayList scheduleArrList;
-    Cursor scheduleCursor;
+    List<Schedule> schedules;
 
     @Nullable
     @Override
@@ -58,7 +63,7 @@ public class ViewMySchedule extends Fragment {
         viewScheduleLayout = inflater.inflate(R.layout.activity_view_my_schedule, container, false);
         lstLayout = viewScheduleLayout.findViewById(R.id.lst_schedule);
 
-        cursorAdapter = new CustomScheduleAdapter(getActivity(), R.layout.schedule_item_layout,null, fromCols, toCols, ViewMySchedule.this);
+        //cursorAdapter = new CustomScheduleAdapter(getActivity(), R.layout.schedule_item_layout,null, fromCols, toCols, ViewMySchedule.this);
 
         SharedPreferences myPref = getActivity().getSharedPreferences("RecruitmentSharedPreferences", MODE_PRIVATE);
         userId = myPref.getString("UserId","");
@@ -84,36 +89,80 @@ public class ViewMySchedule extends Fragment {
     }
 
     private void populateSchedule(){
+        ScheduleDAO dao = new ScheduleDAO();
+        schedules = dao.getSchedule(userId);
 
-        String[] column = new String[]{"_userId"};
-        String[] value = new String[]{userId};
-        scheduleCursor = dbHandler.getTableCursor(TABLE_SCHEDULE, column, value);
-
-        cursorAdapter.changeCursor(scheduleCursor);
-
-        lstLayout.setAdapter(cursorAdapter);
+        CustomScheduleAdapter adapter = new CustomScheduleAdapter(getContext(), schedules, this);
+        lstLayout.setAdapter(adapter);
     }
 
     private void prepareData() {
-        scheduleArrList = new ArrayList();
-        if (scheduleCursor.moveToFirst()) {
-            do { // for each row
-                String[] localList = new String[8];
-                for (int count=0,i = 2; i < scheduleCursor.getColumnCount(); i++, count++) {
-                    localList[count] = scheduleCursor.getString(i);
-                   // localList.add(scheduleCursor.getString(i)); //change the type of details from ArrayList<String> to arrayList<HashMap<String,String>>
+        if(schedules.size() > 0){
+            scheduleArrList = new ArrayList();
+            for(int i=0; i<schedules.size(); i++){
+                scheduleArrList.add(schedules.get(i).toPrint());
+            }
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if(getActivity().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                    Log.d("permission", "Permission denied to Write file - requesting it");
+                    String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                    requestPermissions(permissions, PERMISSION_REQUEST_CODE);
                 }
-                scheduleArrList.add(localList);
-            } while (scheduleCursor.moveToNext());
+            }
+
+            Toast.makeText(getContext(), "Downloading...", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getContext(), "Nothing to Download!", Toast.LENGTH_SHORT).show();
         }
+
+    }
+
+    public void checkIn(View v, String scheduleId){
+        Date currentTime = Calendar.getInstance().getTime();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        ScheduleDAO dao = new ScheduleDAO();
+        Schedule sched = dao.findScheduleById(scheduleId);
+        if(sched != null){
+            sched.setCheckInTime(format.format(currentTime));
+            dao.update(sched);
+            getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ViewMySchedule()).commit();
+
+            //send SMS
+            String message = "Employee - " + userId + " - checked in at Site - " + sched.getSite() + " - on " + sched.getCheckInTime();
+            sendSMS(message);
+        }
+
+    }
+
+    private void sendSMS(String message){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if(getActivity().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-                Log.d("permission", "Permission denied to Write file - requesting it");
-                String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            if(getActivity().checkSelfPermission(Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_DENIED){
+                Log.d("permission", "Permission denied to SEND_SMS - requesting it");
+                String[] permissions = {Manifest.permission.SEND_SMS};
                 requestPermissions(permissions, PERMISSION_REQUEST_CODE);
             }
         }
 
-        Toast.makeText(getContext(), "Downloading...", Toast.LENGTH_SHORT).show();
+        Intent msgSenderService = new Intent(getActivity().getBaseContext(),MessageSender.class);
+        msgSenderService.putExtra("smsMsg",message);
+        getActivity().startService(msgSenderService);
+
+
+    }
+
+    public void checkOut(View v, String scheduleId){
+        Date currentTime = Calendar.getInstance().getTime();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        ScheduleDAO dao = new ScheduleDAO();
+        Schedule sched = dao.findScheduleById(scheduleId);
+        if(sched != null){
+            sched.setCheckoutTime(format.format(currentTime));
+            dao.update(sched);
+            getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ViewMySchedule()).commit();
+
+            //send SMS
+            String message = "Employee - " + userId + " - checked out from Site - " + sched.getSite() + " - on " + sched.getCheckInTime();
+            sendSMS(message);
+        }
     }
 }

@@ -1,35 +1,19 @@
+/**
+ * Author
+ * Harpreet Kaur
+ * 300910377
+ */
 package com.example.comp304_003_finalproject.services;
 
-import android.Manifest;
 import android.app.IntentService;
-import android.app.Service;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.pdf.PdfDocument;
-import android.os.Build;
 import android.os.Environment;
-import android.os.IBinder;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.widget.Toast;
-
-import com.example.comp304_003_finalproject.database.DatabaseHandler;
 import com.opencsv.CSVWriter;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import android.app.Activity;
 
 public class DownloadService extends IntentService {
 
@@ -37,7 +21,7 @@ public class DownloadService extends IntentService {
     ArrayList data;
     String userId;
     public static final int PERMISSION_REQUEST_CODE = 1;
-    String[] header = new String[]{"Schedule Date","Site","Start Time","End Time"};
+    String[] header = new String[]{"Schedule Date","Site","Start Time","End Time", "Check In Time", "Check Out Time"};
 
     public DownloadService() {
         super("Download");

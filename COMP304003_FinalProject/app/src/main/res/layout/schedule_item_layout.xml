@@ -1,46 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TableRow>
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       >
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
                 <TextView
                     android:id="@+id/itemSchedDate"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    style="@style/text_columns"
+
+                    />
                 <TextView
                     android:id="@+id/itemSite"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/itemStartTime"
+                    android:layout_height="wrap_content"
+                    style="@style/text_columns"/>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/itemEndTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Start Time:"
+                            style="@style/text_header2"/>
+                        <TextView
+                            android:id="@+id/itemStartTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/text_columns"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="End Time:"
+                            style="@style/text_header2"/>
+                        <TextView
+                            android:id="@+id/itemEndTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/text_columns"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Check In:"
+                            style="@style/text_header2"/>
+                        <TextView
+                            android:id="@+id/itemCheckInTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/text_columns"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Check Out:"
+                            style="@style/text_header2"/>
+                        <TextView
+                            android:id="@+id/itemCheckoutTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/text_columns"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
             </TableRow>
             <TableRow>
-                <Button
-                    android:id="@+id/itemBtnCheckIn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Check In"/>
-                <Button
-                    android:id="@+id/itemBtnCheckOut"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Check Out"/>
-            </TableRow>
-        </TableLayout>
 
+            </TableRow>
+
+    </TableLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/itemBtnCheckIn"
+                android:text="Check In"
+                style="@style/column_button"
+                />
+            <Button
+                android:id="@+id/itemBtnCheckOut"
+                android:text="Check Out"
+                style="@style/column_button"
+                />
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

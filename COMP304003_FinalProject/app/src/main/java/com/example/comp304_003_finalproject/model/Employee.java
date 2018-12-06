@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Employee implements Serializable {
 
     private Long id;
+    private String userId;
     private String name;
     private String address;
     private String phone;
@@ -12,6 +13,13 @@ public class Employee implements Serializable {
     private Double score;
     private String photo;
 
+    public String getUserId(){
+        return userId;
+    }
+
+    public void setUserId(String userId){
+        this.userId = userId;
+    }
     public String getPhoto() {
         return photo;
     }

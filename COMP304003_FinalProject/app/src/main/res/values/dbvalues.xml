@@ -1,48 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="db_name">Recruitment.db</string>
+    <string name="db_name">EmployeeData.db</string>
     <string name="db_version">1</string>
 
-    <string name="tbl_users">tbl_users</string>
-    <string name="tbl_availability">tbl_availability</string>
     <string name="tbl_schedule">tbl_schedule</string>
+    <string name="tbl_employee">Employee</string>
 
     <string-array name="tables">
-        <item>@string/tbl_users</item>
-        <item>@string/tbl_availability</item>
+        <item>@string/tbl_employee</item>
         <item>@string/tbl_schedule</item>
     </string-array>
 
     <string-array name="table_create_scripts">
-        <item>
-            CREATE TABLE tbl_users (_id INTEGER PRIMARY KEY AUTOINCREMENT ,userId TEXT, password TEXT, firstName TEXT, lastName TEXT, address TEXT, city TEXT, postalCode TEXT);
-        </item>
+       <item>
+           CREATE TABLE Employee (id INTEGER PRIMARY KEY, userId TEXT NOT NULL, name TEXT NOT NULL, address TEXT, phone TEXT, site TEXT, score REAL , photo TEXT);
+       </item>
 
         <item>
-            CREATE TABLE tbl_schedule (_id INTEGER PRIMARY KEY AUTOINCREMENT ,_userId TEXT, date TEXT, site TEXT, startTime TEXT, endTime TEXT, checkInTime TEXT, checkOutTime TEXT);
+            CREATE TABLE tbl_schedule (id INTEGER PRIMARY KEY AUTOINCREMENT ,userId TEXT, date TEXT, site TEXT, startTime TEXT, endTime TEXT, checkInTime TEXT, checkOutTime TEXT);
         </item>
+
     </string-array>
 
+
     <string-array name="table_insert_scripts">
+
         <item>
-            INSERT INTO tbl_users(userId, password, firstName, lastName, address, city, postalCode)
-            values(\'kaur\',\'12345\',\'Harpreet\', \'Kaur\', \'20 Mackinac Cr\', \'Toronto\', \'M1fd3g\');
-        </item>
-        <item>
-             INSERT INTO tbl_users(userId, password, firstName, lastName, address, city, postalCode)
-            values(\'ksharma\',\'12345\',\'Keshav\', \'Sharma\', \'20 Mackinac Cr\', \'Toronto\', \'M1fd3g\');
-        </item>
-        <item>
-            INSERT INTO tbl_schedule(_userId, date, site, startTime, endTime)
+            INSERT INTO tbl_schedule(userId, date, site, startTime, endTime)
             values(\'kaur\',\'2018-12-22\', \'Centennial College\', \'0700\', \'1500\');
             </item>
         <item>
-            INSERT INTO tbl_schedule(_userId, date, site, startTime, endTime)
+            INSERT INTO tbl_schedule(userId, date, site, startTime, endTime)
             values(\'kaur\',\'2018-12-23\', \'Centennial College\', \'0700\', \'1500\');
         </item>
         <item>
-            INSERT INTO tbl_schedule(_userId, date, site, startTime, endTime)
+            INSERT INTO tbl_schedule(userId, date, site, startTime, endTime)
             values(\'kaur\',\'2018-12-24\', \'Centennial College\', \'0700\', \'1500\');
         </item>
     </string-array>
@@ -59,8 +52,8 @@
     </string-array>
 
     <string-array name="fields_schedule">
-        <item>_id</item>
-        <item>_userId</item>
+        <item>id</item>
+        <item>userId</item>
         <item>date</item>
         <item>site</item>
         <item>startTime</item>

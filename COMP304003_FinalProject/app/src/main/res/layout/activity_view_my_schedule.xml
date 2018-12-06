@@ -22,30 +22,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TableRow>
+
                 <TextView
-                    android:text="Schedule Date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="Date"
+                    style="@style/text_header"/>
+
                 <TextView
+                    android:layout_width="30pt"
+                    android:layout_height="wrap_content"
                     android:text="Site"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:text="Start Time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:text="End Time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    style="@style/text_header"/>
             </TableRow>
         </TableLayout>
+
         <ListView
             android:id="@+id/lst_schedule"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10pt"
             android:layout_gravity="center"
+            android:layout_margin="2pt"
             android:descendantFocusability="afterDescendants">
 
         </ListView>

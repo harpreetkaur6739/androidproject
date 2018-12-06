@@ -3,7 +3,7 @@
     package="com.example.comp304_003_finalproject">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -28,9 +28,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserHome" />
-        <activity android:name=".AdminHome" />
-        <activity android:name=".AddUser" />
+        <activity android:name=".UserHome"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -47,7 +46,6 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".MapActivity" />
-        <activity android:name=".SMSActivity"></activity>
         <activity android:name=".UserLogin" />
 
         <service android:name=".services.DownloadService">
@@ -55,6 +53,19 @@
                 <action android:name="com.example.comp304_003_finalproject.services.DownloadService" />
             </intent-filter>
         </service>
+        <service android:name=".services.MessageSender">
+            <intent-filter>
+                <action android:name="com.example.comp304_003_finalproject.services.MessageSender" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name=".services.MessageReceiver">
+            <intent-filter android:priority="100">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+        <activity android:name=".AdminMainPage"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

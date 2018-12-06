@@ -1,3 +1,8 @@
+/**
+ * Author
+ * Harpreet Kaur
+ * 300910377
+ */
 package com.example.comp304_003_finalproject.database;
 
 import android.content.ContentValues;
@@ -48,44 +53,13 @@ public class DatabaseHandler {
     // Database operations
     /////////////////////////
     // Add a new record
-    public long addRecord(ContentValues values, String tableName, String fields[], String record[]) {
+    public long addRecord(ContentValues values, String tableName) {
         SQLiteDatabase db = dbManager.getWritableDbHandler();
 
-        for (int i=1;i<record.length;i++)
-            values.put(fields[i], record[i]);
-        // Insert the row
+       // Insert the row
         long rowId = db.insert(tableName, null, values);
         db.close(); //close database connection
         return rowId;
-    }
-
-
-    // Read all records
-    public List getTable(String tableName) {
-        List table = new ArrayList(); //to store all rows
-        // Select all records
-        String selectQuery = "SELECT  * FROM " + tableName;
-
-        SQLiteDatabase db = dbManager.getReadableDbHandler();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        //scroll over rows and store each row in an array list object
-        if (cursor.moveToFirst())
-        {
-            do
-            { // for each row
-                ArrayList row=new ArrayList(); //to store one row
-
-                for (int i = 0; i < cursor.getColumnCount(); i++) {
-                    row.add(cursor.getString(i));
-                }
-
-                table.add(row); //add row to the list
-
-            } while (cursor.moveToNext());
-        }
-
-        // return table as a list
-        return table;
     }
 
     // Read all records and return cursor
@@ -111,37 +85,6 @@ public class DatabaseHandler {
 
         return cursor;
     }
-
-    // Read all records and return cursor
-    public Cursor getJoinTableCursor(String tableName1, String tableName2, String matchTab1, String matchTab2, String tableCondition, String[] keyName, String[] value) {
-
-        String selectQuery = "SELECT  * FROM " + tableName1 + " ta JOIN " + tableName2 + " tb ON ta." + matchTab1 + " = tb." + matchTab2;
-
-        SQLiteDatabase db = dbManager.getReadableDbHandler();
-
-        int count = 0;
-        if(keyName != null && keyName.length > count){
-
-            String tConditionAlias = "ta";
-            if(tableName2.equals(tableCondition)){
-                tConditionAlias = "tb";
-            }
-
-            selectQuery += " WHERE ";
-            while(keyName.length > count){
-                selectQuery += tConditionAlias + "." + keyName[count] + " = ? ";
-                count++;
-                if(keyName.length > count){
-                    selectQuery += " AND ";
-                }
-            }
-
-        }
-        Cursor cursor = db.rawQuery(selectQuery, value);
-
-        return cursor;
-    }
-
 
     // Update a record
     public int updateRecord(ContentValues values, String tableName, String fields[],String record[]) {

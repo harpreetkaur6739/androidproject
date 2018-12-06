@@ -1,11 +1,14 @@
+/**
+ * Author
+ * Harpreet Kaur
+ * 300910377
+ */
 package com.example.comp304_003_finalproject.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.example.comp304_003_finalproject.R;
-
-
 
 public class DatabaseManager extends SQLiteOpenHelper {
     //
