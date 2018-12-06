@@ -25,7 +25,7 @@ import java.util.List;
 
 public class AdminHome extends AppCompatActivity {
 
-    Button bntAddEmployee;
+    Button bntAddEmployee,bntMap,bntSMS;
     private ListView listEmployee;
 
 
@@ -66,11 +66,43 @@ public class AdminHome extends AppCompatActivity {
             }
         });
 
+        bntMap = (Button) findViewById(R.id.map);
+
+        bntMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+                Intent intent=new Intent(AdminHome.this, MapActivity.class);
+
+                startActivity(intent);
+
+            }
+        });
+
+        bntSMS = (Button) findViewById(R.id.sendSMS);
+
+        bntSMS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+                Intent intent=new Intent(AdminHome.this, SMSActivity.class);
+
+                startActivity(intent);
+
+            }
+        });
+
+
+
         registerForContextMenu(listEmployee);
 
 
 
     }
+
+
 
 
     private void loadList()  {
@@ -158,4 +190,5 @@ public class AdminHome extends AppCompatActivity {
             }
         });
     }
+
 }

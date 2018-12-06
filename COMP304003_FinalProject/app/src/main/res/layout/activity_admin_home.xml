@@ -28,6 +28,37 @@
         android:background="@drawable/background"
         android:stateListAnimator="@null"/>
 
+    <Button
+        android:id="@+id/map"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="80dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/background_map"
+        android:elevation="6dp"
+        android:stateListAnimator="@null"
+        android:text="+"
+        android:textColor="#ffffff"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/sendSMS"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="150dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/background_sms"
+        android:elevation="6dp"
+        android:stateListAnimator="@null"
+        android:text="S"
+        android:textColor="#ffffff"
+        android:textSize="40sp" />
+
+
 
 
 </RelativeLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    tools:context="com.example.comp304_003_finalproject.AdminHome">
+
+    <item
+        android:id="@+id/menu_addUser"
+        android:title="Ok"
+        android:icon="@drawable/ic_confirmar"
+        app:showAsAction="always"/>
+
+</menu>
